@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Variance
 {
@@ -11,7 +9,11 @@ namespace Variance
         {
             IEnumerable<IBar> fooBar = GetBar();
 
-            foreach(FooBar element in fooBar)
+            // Uncomment to see compiler error
+            //IEnumerable<FooBar> f = GetBar();
+
+            // Why does this not generate a compiler error; instead of waiting until runtime?
+            foreach (FooBar element in fooBar)
             {
                 Console.WriteLine(element.DoBar());
             }
@@ -21,7 +23,8 @@ namespace Variance
 
         public static IEnumerable<IBar> GetBar()
         {
-            return new List<IBar> { new FooBar(), new FooBar(), new MyBar() };
+            // Return two different implementations of IBar
+            return new List<IBar> { new FooBar(), new FooBar(), new MyBar(), new MyBar() };
         }
     }
 
